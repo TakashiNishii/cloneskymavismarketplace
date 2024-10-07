@@ -6,6 +6,7 @@ import NFTsCard from "../components/NFTsCard";
 import Link from "next/link";
 import { CollectionsInfo } from "../api/skymavis/collections/route";
 import classNames from "classnames";
+import PropertiesFilter from "../components/PropertiesFilter";
 
 interface NftListPageProps {
   params: {
@@ -100,7 +101,8 @@ export default function NftListPage(
                 href={`?contractAddress=${collection.contractAddress}`}
                 className={classNames(
                   "flex justify-between hover:bg-slate-800 p-2 rounded",
-                  collection.contractAddress === selectedCollection ? "bg-blue-800" : ""
+                  collection.contractAddress === selectedCollection ? "bg-blue-800" : "",
+                  selectedCollection && selectedCollection !== collection.contractAddress && "hidden"
                 )}
               >
                 <span>{collection.name}</span>
@@ -108,6 +110,15 @@ export default function NftListPage(
               </Link>
             ))}
           </div>
+
+          {
+            selectedCollection && (
+              <>
+                <div className="mt-5 text-lg font-bold">Properties</div>
+                <PropertiesFilter contractId={selectedCollection} />
+              </>
+            )
+          }
         </div>
         <div className=" flex-1 grid grid-cols-3 gap-4 min-h-dvh">
           {nfts?.result.items.map((nft, index) => (
