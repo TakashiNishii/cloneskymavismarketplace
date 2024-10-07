@@ -26,6 +26,7 @@ export type NftsInfo = {
 export async function GET(request: Request){
   const {searchParams} = new URL(request.url);
   const address = searchParams.get('address');
+  const contractAddress = searchParams.get('contractAddress');
 
   try {
     const response = await fetch(`${process.env.MAVIS_URL}/ronin/nfts/search`,{
@@ -37,7 +38,7 @@ export async function GET(request: Request){
       },
       body: JSON.stringify(
         {
-          "contractAddresses": [],
+          "contractAddresses": contractAddress ? [contractAddress] : [],
           "ownerAddress": address,
           "paging": {
             "limit": 100,

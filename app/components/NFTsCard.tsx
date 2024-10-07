@@ -11,7 +11,7 @@ const NFTsCard = ({
   nft
 }: NFTsCardProps) => {
   return (
-    <div className="card bg-base-100 w-96 shadow-xl">
+    <div className="card bg-base-100 w-96 max-h-96 shadow-xl">
       <figure className="px-10 pt-10">
         <Image
           src={nft.rawMetadata.image}

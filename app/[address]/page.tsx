@@ -50,14 +50,24 @@ export default function NftListPage(
 
     fetchNfts();
     fetchCollections();
-  }, [])
+  }, [address])
 
   useEffect(() => {
-    if (!searchParams.contractAddress) return
-    setSelectedCollection(searchParams.contractAddress)
+    setNfts(null)
+    setSelectedCollection(searchParams.contractAddress ?? null)
+    const fetchNfts = async () => {
+      try {
+        const contractAddressClause = searchParams.contractAddress ? `&contractAddress=${searchParams.contractAddress}` : ""
+        const response = await fetch(`/api/skymavis/nfts?address=${address}${contractAddressClause}`);
+        const data = await response.json() as NftsInfo
+        setNfts(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchNfts();
   }, [searchParams.contractAddress])
 
-  console.log(collections)
   return (
     <div className='flex flex-col gap-5'>
       <div className="navbar bg-neutral text-neutral-content">
@@ -70,7 +80,17 @@ export default function NftListPage(
       </div>
       <div className="flex flex-row gap-4">
         <div className="flex flex-col gap-2 w-[25%] bg-slate-600 rounded p-4">
-          <h2 className="text-lg font-bold">Filters</h2>
+          <div className="flex flex-row justify-between">
+            <h2 className="text-lg font-bold">Filters</h2>
+
+            {/* Clear button */}
+            {selectedCollection && (
+              <Link href={`./${address}`}>
+                <button className="btn btn-primary">Clear</button>
+              </Link>
+            )}
+          </div>
+
           <h3 className="text-base font-semibold">Total: {nfts?.result.paging.total}</h3>
           <div className="mt-5 text-lg font-bold">Collections</div>
           <div className="flex flex-col gap-2">
@@ -89,7 +109,7 @@ export default function NftListPage(
             ))}
           </div>
         </div>
-        <div className=" flex-1 grid grid-cols-3 gap-4">
+        <div className=" flex-1 grid grid-cols-3 gap-4 min-h-dvh">
           {nfts?.result.items.map((nft, index) => (
             <NFTsCard key={index} nft={nft} index={index} />
           ))}
