@@ -1,6 +1,6 @@
 import React from 'react'
-import { NftItem } from '../api/skymavis/route'
 import Image from 'next/image'
+import { NftItem } from '../api/skymavis/nfts/route'
 
 interface NFTsCardProps {
   nft: NftItem

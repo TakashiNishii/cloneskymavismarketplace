@@ -1,12 +1,12 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { NftsInfo } from "../api/skymavis/route";
 import NFTsCard from "../components/NFTsCard";
 import Link from "next/link";
 import { CollectionsInfo } from "../api/skymavis/collections/route";
 import classNames from "classnames";
 import PropertiesFilter from "../components/PropertiesFilter";
+import { NftsInfo } from "../api/skymavis/nfts/route";
 
 interface NftListPageProps {
   params: {
