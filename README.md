@@ -57,3 +57,41 @@ Eu notei que no site da SkyMavis ao entrar com um endereço ele faz três requis
 
 
 <img src="/public/PrintListNFTS.png" alt="Print site">
+
+### Filtro por collections
+
+![NFTs Filtrados por collections](image-1.png)
+Ao selecionar uma coleção, notei que o site faz duas novas requisições:
+- Ele filtra os nfts do usuário pelo endereço do contrato da coleção selecionada
+- Faz uma requisição de tokenMetadata, onde vem os filtros especificos dessa coleção (Por exemplo o da imagem acima temos informações como `class` e `skils`)
+
+### APIs que utilizei para replicar essa tela:
+A partir daqui eu não consegui replicar as requisições que o site faz utilizado a API REST da SkyMavis, então eu utilizei a API GraphQL que eles disponibilizam para pegar as informações de tokenMetadata.
+
+Nisso vem exatamente os mesmos filtros que o site utiliza, porém ele não tem uma opção de sort ou agrupamento, acredito que essa parte é algo que a equipe de desenvolvimento do site faz especifico para cada jogo da plataforma.
+
+- Query que utilizei para pegar as informações de tokenMetadata:
+```graphql
+ query GetTokenMetadata($tokenAddress: String!) {
+            tokenMetadata(tokenAddress: $tokenAddress) {
+              attributes {
+                displayType
+                key
+                values {
+                  value
+                  count
+                }
+              }
+            }
+          }
+```
+
+> Já para pegar as informações de nfts do usuário eu utilizei a mesma API REST que utilizei anteriormente, apenas adicionei o filtro de `contractAddresses` com o endereço do contrato da coleção selecionada dentro do array.
+
+![NFTs filtrado por collection](image-2.png)
+
+## 🔎 Considerações
+
+Existe uma diferença entre a API REST e a API GraphQL da SkyMavis, a API REST é mais simples e direta, porém não tem todas as informações que a API GraphQL tem, por exemplo, pegar os metadatas de uma coleção específica, e também ao listar os NFTs acredito que preciso trocar para o GraphQL pois os filtros por metadatas só estão disponíveis nessa API.
+
+Suspeito que as informações de Axie também está em outra API no playground deles tem algo separado para Axie, logo, notei que algumas informações desse jogo não vem igual os outros games, como por exemplo as propriedades de alguma coleção de Axie.
