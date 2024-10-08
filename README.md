@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Wallet-NFTDex
 
-## Getting Started
+![GitHub repo size](https://img.shields.io/github/repo-size/TakashiNishii/cloneskymavismarketplace?style=for-the-badge)
 
-First, run the development server:
+<img src="/public/PrintSite.png" alt="Print site">
+<img src="/public/PrintListNFTS.png" alt="Print site">
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+> Projeto simples para testes na API utilizada no https://marketplace.skymavis.com
+
+## 💻 Pré-requisitos
+
+Antes de começar, verifique se você atendeu aos seguintes requisitos:
+
+- Você instalou a versão mais recente de `Node.js, React, Next.js, Typescript`
+- Você tem uma máquina `<Windows / Linux / Mac>`.
+
+## 🚀 Instalando Wallet-NFTDex
+
+Para instalar o Wallet-NFTDex, siga estas etapas:
+
+Linux e macOS:
+
+```
+npm run install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Windows:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+npm run install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ☕ Usando Wallet-NFTDex
 
-## Learn More
+Para usar Wallet-NFTDex, siga estas etapas:
 
-To learn more about Next.js, take a look at the following resources:
+```
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📊 Relatório de uso
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Eu notei que no site da SkyMavis ao entrar com um endereço ele faz três requisições: 
+- Uma para pegar informações do usuário como nickname, avatar, etc.
+- Informações sobre os collections que esse usuário possui e a quantidade de nft separado (esse consegui puxar as info, apesar de não ter conseguido puxar as imagens de capa do collection)
+- Listagem geral dos nfts que o usuário possui
 
-## Deploy on Vercel
+![Requisições](image.png)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### APIs que utilizei para replicar essa tela:
+1. [Get list of collections having NFTs belonging to an address (GET)](https://docs.skymavis.com/api/web3/get-list-of-collections-having-nf-ts-belonging-to-an-address)
+2. [Search for matched NFTs](https://docs.skymavis.com/api/ronin-rest/search-for-matched-nf-ts)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+#### Considerações: Para pegar os collections do usuário eu precisei somente do endereço da carteira, e consegui pegar normalmente todas as informações separadas de collections. 
+#### Já para pegar os nfts do usuário eu precisei do endereço da carteira e apesar de ser required o `contractAddresses` você pode passar um array vazio que ele retorna todos os nfts do usuário.
+
+
+<img src="/public/PrintListNFTS.png" alt="Print site">
